@@ -51,8 +51,9 @@ namespace SharedLibrary.Services
                         break;
                     }
 
-                case "interval":
+                case "feed":
                     {
+                        res.Message = $"Direct method {req.Name} was executed successfully. Pet Fed.";
                         break;
                     }
 
@@ -66,5 +67,7 @@ namespace SharedLibrary.Services
 
             return new MethodResponse(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(res)), 200);
         }
+
+        
     }
 }

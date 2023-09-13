@@ -27,7 +27,7 @@ namespace PetFeeder.Device
             .ConfigureServices((config, services) =>
             {
                 services.AddSingleton<MainWindow>();
-                services.AddSingleton(new DeviceConfiguration(config.Configuration.GetConnectionString("PetFeederDevice")!));
+                services.AddSingleton(new DeviceConfiguration(config.Configuration.GetConnectionString("FeedingDevice")!));
                 services.AddSingleton<DeviceManager>();
                 services.AddSingleton<NetworkManager>();
             }).Build();
