@@ -54,6 +54,7 @@ namespace SharedLibrary.Services
                 case "feed":
                     {
                         res.Message = $"Direct method {req.Name} was executed successfully. Pet Fed.";
+
                         break;
                     }
 
