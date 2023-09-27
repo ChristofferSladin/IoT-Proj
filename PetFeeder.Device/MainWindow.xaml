@@ -9,7 +9,6 @@
     <Grid>
         <Label Name="ConnStatus" VerticalAlignment="Center" HorizontalAlignment="Left" Width="35"></Label>
         <Button Content="Feed Pet" VerticalAlignment="Top" HorizontalAlignment="Left" Width="100" Click="FeedPet_Click"/>
-        <ComboBox Name="petTypeComboBox" VerticalAlignment="Top" HorizontalAlignment="Right" SelectionChanged="PetTypeComboBox_SelectionChanged"/>
         <Label Name="statusLabel" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
         <Slider Name="portionSizeSlider" VerticalAlignment="Center" HorizontalAlignment="Center" ValueChanged="PortionSizeSlider_ValueChanged"/>
     </Grid>

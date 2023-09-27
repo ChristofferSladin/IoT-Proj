@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:viewModels="clr-namespace:IoT.ControlPanel.MVVM.ViewModels"
+             x:DataType="viewModels:MainViewModel"
+             x:Class="IoT.ControlPanel.MainPage"
+             Shell.NavBarIsVisible="False"
+             >
+
+    <ContentPage.Behaviors>
+        <toolkit:StatusBarBehavior StatusBarColor="{StaticResource Black}"></toolkit:StatusBarBehavior>
+        
+    </ContentPage.Behaviors>
+
+
+    <Grid ColumnDefinitions="*,*" Margin="10" ColumnSpacing="15" RowSpacing="20" RowDefinitions="1*, 3*, auto, 2*, auto, 2*">
+
+
+        <Grid Grid.Row="0" Grid.ColumnSpan="2" ColumnDefinitions="*,*" Margin="0">
+
+            <Button Grid.Column="1" Command="{Binding GotoSettingsCommand}" Text=">" Style="{StaticResource Key=NavigationButton}" HorizontalOptions="End"></Button>
+        </Grid>
+
+        <Frame Grid.Row="1" Grid.ColumnSpan="2" Padding="0" Background="{StaticResource Secondary}" BorderColor="Transparent">
+            <Image Source="Resources/Images/livingroom_unsplash.jpg"></Image>
+        </Frame>
+
+        <Grid Grid.Row="2" Grid.ColumnSpan="2" ColumnDefinitions="*,*">
+            <Label Grid.Column="0" Text="Quick Access" TextColor="{StaticResource White}"/>
+            <HorizontalStackLayout Grid.Column="1" HorizontalOptions="End">
+                <Label Grid.Column="1" Text="Devices " TextColor="{StaticResource Tertiary}" VerticalOptions="Center"/>
+                <Label Grid.Column="1" Text="&#xf054;" FontFamily="{StaticResource FontAwesome-Solid}" TextColor="{StaticResource Tertiary}" VerticalOptions="Center" FontSize="17"/>
+            </HorizontalStackLayout>
+        </Grid>
+
+        <Border Grid.Row="3" Grid.Column="0" StrokeThickness="0" Background="{StaticResource Secondary} ">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="20"/>
+            </Border.StrokeShape>
+        </Border>
+
+        <Grid Grid.Row="4" Grid.ColumnSpan="2">
+            <Label Grid.Column="0" Text="Favorite Device" TextColor="{StaticResource White}"/>
+        </Grid>
+
+        <Border Grid.Row="5" Grid.ColumnSpan="2" StrokeThickness="0" Background="{StaticResource Secondary} ">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="20"/>
+            </Border.StrokeShape>
+        </Border>
+
+        <Border Grid.Row="3" Grid.Column="1" StrokeThickness="0" Background="{StaticResource Secondary} ">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="20"/>
+            </Border.StrokeShape>
+        </Border>
+
+    </Grid>
+
+    <!--<ScrollView>
+
+        
+        
+    </ScrollView>-->
+
+</ContentPage>

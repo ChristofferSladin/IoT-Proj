@@ -32,11 +32,13 @@ namespace CosmosdbDeviceTrigger
     public class MyDocument
     {
         public string Id { get; set; }
+        public int Status { get; set; }
+        public PayloadWrapper Payload { get; set; }
+    }
 
-        public string Text { get; set; }
-
-        public int Number { get; set; }
-
-        public bool Boolean { get; set; }
+    public class PayloadWrapper
+    {
+        public string Message { get; set; }
+        public object Payload { get; set; } // Use 'object' if the payload can be of any type
     }
 }

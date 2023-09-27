@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="IoT.ControlPanel.MVVM.Pages.SettingsPage"
+             xmlns:viewModels="clr-namespace:IoT.ControlPanel.MVVM.ViewModels"
+             x:DataType="viewModels:SettingsViewModel"
+             Title="Settings"
+             Shell.NavBarIsVisible="False"
+             >
+
+
+
+    <ContentPage.Behaviors>
+        <toolkit:StatusBarBehavior StatusBarColor="{StaticResource Black}"></toolkit:StatusBarBehavior>
+    </ContentPage.Behaviors>
+
+
+    <Grid ColumnDefinitions="*,*" Margin="10" ColumnSpacing="15" RowSpacing="20" RowDefinitions="0.5*, 3*, auto, 2*, auto, 2*">
+
+
+        <Grid Grid.Row="0" Grid.ColumnSpan="2" ColumnDefinitions="*,*">
+
+            <Button Grid.Column="1" Command="{Binding GoBackCommand}" Text=">" Style="{StaticResource Key=NavigationButton}" HorizontalOptions="End"></Button>
+        </Grid>
+
+    </Grid>
+
+</ContentPage>

@@ -26,9 +26,14 @@ namespace SharedLibrary.Services
 
         private async Task StartAsync()
         {
+            var _telemetryInterval = await  DeviceTwinManager.GetDesiredTwinPropertyAsync(_client, "telemetryInterval");
             await _client.SetMethodDefaultHandlerAsync(DirectMethodDefaultCallback, null);
-        }
 
+            if (_telemetryInterval != null)
+            {
+                _config.TelemetryInterval = int.Parse(_telemetryInterval.ToString()!);
+            }
+        }
 
         private async Task<MethodResponse> DirectMethodDefaultCallback(MethodRequest req, object userContext)
         {
@@ -51,24 +56,13 @@ namespace SharedLibrary.Services
                         break;
                     }
 
-                case "feed":
-                    {
-                        res.Message = $"Direct method {req.Name} was executed successfully. Pet Fed.";
-
-                        break;
-                    }
-
                 default:
                     {
                         res.Message = $"Direct method {req.Name} not found.";
                         return new MethodResponse(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(res)), 404);
                     }
-
             }
-
             return new MethodResponse(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(res)), 200);
         }
-
-        
     }
 }

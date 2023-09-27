@@ -16,9 +16,6 @@ using System.Windows.Shapes;
 
 namespace PetFeeder.Device
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         private readonly DeviceManager _deviceManager;
@@ -29,10 +26,6 @@ namespace PetFeeder.Device
 
             _deviceManager = deviceManager;
             _networkManager = networkManager;
-
-            petTypeComboBox.Items.Add("Cat");
-            petTypeComboBox.Items.Add("Dog");
-            petTypeComboBox.Items.Add("Lizard");
 
             Task.FromResult(CheckConnectivityAsync);
         }
@@ -52,16 +45,8 @@ namespace PetFeeder.Device
             statusLabel.Content = "Fed the pet.";
             await Task.Delay(3000);
             statusLabel.Content = "";
-        }
 
-        private void PetTypeComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            // Update based on pet type
-        }
 
-        private void PortionSizeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            // Update portion size
         }
     }
 }
