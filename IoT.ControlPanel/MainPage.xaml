@@ -10,15 +10,12 @@
 
     <ContentPage.Behaviors>
         <toolkit:StatusBarBehavior StatusBarColor="{StaticResource Black}"></toolkit:StatusBarBehavior>
-
     </ContentPage.Behaviors>
-
 
     <Grid ColumnDefinitions="*,*" Margin="10" ColumnSpacing="15" RowSpacing="20" VerticalOptions="Start" RowDefinitions="1*, 3*, auto, 2*, auto, 2*">
 
-
         <Grid Grid.Row="0" Grid.ColumnSpan="2" ColumnDefinitions="*,*" Margin="0">
-            <Button Grid.Column="1" Command="{Binding GotoSettingsCommand}" Text=">" FontSize="18" Style="{StaticResource Key=NavigationButton}" HorizontalOptions="End"></Button>
+            <Button Grid.Column="1" Command="{Binding GotoSettingsCommand}" Text="&#xf141;" FontFamily="FontAwesome-Regular" FontSize="18" Style="{StaticResource Key=NavigationButton}" HorizontalOptions="End"></Button>
         </Grid>
 
         <Frame Grid.Row="1" Grid.ColumnSpan="2" Padding="0" Background="{StaticResource Secondary}">
@@ -39,16 +36,28 @@
             </HorizontalStackLayout>
         </Grid>
 
-        <Frame Grid.Row="3" Grid.Column="0" Background="{StaticResource Secondary}"></Frame>
+        <Frame Grid.Row="3" Grid.Column="0" Background="{StaticResource Secondary}" BorderColor="Transparent" Padding="15">
+            <Grid RowDefinitions="auto,*" ColumnDefinitions="*,*">
+                <Label Text="Icon*" Grid.Row="0" Grid.Column="0" VerticalOptions="Start"/>
+
+                <Switch x:Name="DeviceSwitch" Grid.Row="0" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Start" Margin="0,-14,0,0" Toggled="OnSwitchToggled"/>
+
+
+
+                <VerticalStackLayout Grid.Row="1" Grid.ColumnSpan="2" Margin="0,15,0,0">
+                    <Label FontSize="11" Text="Sonic Electronics" TextColor="{StaticResource Tertiary}"/>
+                    <Label Text="Smart Lamp"/>
+                </VerticalStackLayout>
+
+                
+            </Grid>
+        </Frame>
 
         <Frame Grid.Row="3" Grid.Column="1" Background="{StaticResource Secondary}"></Frame>
 
         <Label Grid.Row="4" Grid.ColumnSpan="2" Grid.Column="0" Text="Favorite Device" TextColor="{StaticResource White}"/>
 
         <Frame Grid.Row="5" Grid.ColumnSpan="2"  Background="{StaticResource Secondary}"></Frame>
-
-
-
     </Grid>
 
     <!--<ScrollView>

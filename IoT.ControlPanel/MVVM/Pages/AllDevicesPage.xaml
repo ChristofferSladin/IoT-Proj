@@ -7,14 +7,19 @@
              x:Class="IoT.ControlPanel.MVVM.Pages.AllDevicesPage"
              Title="All Devices"
              Shell.NavBarIsVisible="False">
-    
+
     <ContentPage.Behaviors>
         <toolkit:StatusBarBehavior StatusBarColor="{StaticResource Black}"></toolkit:StatusBarBehavior>
     </ContentPage.Behaviors>
 
-    <Grid ColumnDefinitions="*,*" Margin="10" ColumnSpacing="15" RowSpacing="20" VerticalOptions="Start" RowDefinitions="1*, 3*, auto, 2*, auto, 2*">
-        <Grid Grid.Row="0" Grid.ColumnSpan="2" ColumnDefinitions="*,*">
-            <Button Grid.Column="1" Command="{Binding GoBackCommand}" Text="X" Style="{StaticResource Key=NavigationButton}" HorizontalOptions="End"></Button>
-        </Grid>
+    <Grid Margin="10" VerticalOptions="Start" RowDefinitions="auto, *">
+
+        <Button Grid.Row="0" Command="{Binding GoBackCommand}" Text="X" Style="{StaticResource Key=NavigationButton}" HorizontalOptions="End" VerticalOptions="Center"></Button>
+
+        <VerticalStackLayout Grid.Row="1" VerticalOptions="Start">
+            <Label Text="All Devices" FontSize="22"/>
+            
+        </VerticalStackLayout>
+
     </Grid>
 </ContentPage>
