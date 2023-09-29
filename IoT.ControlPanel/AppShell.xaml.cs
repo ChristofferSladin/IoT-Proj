@@ -10,6 +10,8 @@ namespace IoT.ControlPanel
 
             Routing.RegisterRoute(nameof(SettingsPage), typeof(SettingsPage));
             Routing.RegisterRoute(nameof(AllDevicesPage), typeof(AllDevicesPage));
+
+            // LÄGG TILL EN ROUTE TILL GetStartedPage
         }
     }
 }
