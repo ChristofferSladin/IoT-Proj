@@ -5,8 +5,9 @@ public static class DatabasePathFinder
 {
     public static string GetPath(string databaseName = "Database.sqlite.db")
     {
-        var path = "";
+        var path = string.Empty;
 
+        
         if (DeviceInfo.Platform == DevicePlatform.Android)
         {
             path = Path.Combine(FileSystem.AppDataDirectory, databaseName);

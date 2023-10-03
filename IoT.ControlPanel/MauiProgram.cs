@@ -6,6 +6,7 @@ using IoT.ControlPanel.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SharedLibrary;
+using SharedLibrary.Contexts;
 
 namespace IoT.ControlPanel
 {
@@ -46,7 +47,7 @@ namespace IoT.ControlPanel
 
             builder.Services.AddSingleton<DeviceManager>();
 
-            //builder.Services.AddDbContext<DataContext>(x => x.UseSqlite($"Data Source={DatabasePathFinder.GetPath()}"));
+            builder.Services.AddDbContext<ChristoDbContext>(x => x.UseSqlite($"Data Source={DatabasePathFinder.GetPath()}", x => x.MigrationsAssembly(nameof(SharedLibrary))));
 
 #if DEBUG
             builder.Logging.AddDebug();
