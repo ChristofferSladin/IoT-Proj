@@ -4,7 +4,7 @@ namespace IoT.ControlPanel.MVVM.Pages;
 
 public partial class AllDevicesPage : ContentPage
 {
-	public AllDevicesPage(AllDevicesViewModel viewModel)
+	public AllDevicesPage(MainViewModel viewModel)
 	{
 		InitializeComponent();
 

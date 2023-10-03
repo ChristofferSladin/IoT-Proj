@@ -16,6 +16,5 @@ namespace IoT.ControlPanel
             var viewModel = (MainViewModel)BindingContext;
             viewModel.ToggleState(e);
         }
-
     }
 }

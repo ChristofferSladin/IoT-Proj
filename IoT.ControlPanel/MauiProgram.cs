@@ -2,7 +2,10 @@
 using IoT.ControlPanel.MVVM.Pages;
 using IoT.ControlPanel.MVVM.ViewModels;
 using IoT.ControlPanel.MVVM.Views;
+using IoT.ControlPanel.Services;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using SharedLibrary;
 
 namespace IoT.ControlPanel
 {
@@ -40,6 +43,10 @@ namespace IoT.ControlPanel
 
             builder.Services.AddSingleton<HomeViewModel>();
             builder.Services.AddSingleton<HomePage>();
+
+            builder.Services.AddSingleton<DeviceManager>();
+
+            //builder.Services.AddDbContext<DataContext>(x => x.UseSqlite($"Data Source={DatabasePathFinder.GetPath()}"));
 
 #if DEBUG
             builder.Logging.AddDebug();
