@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Maui;
+﻿using Camera.MAUI;
+using CommunityToolkit.Maui;
 using IoT.ControlPanel.MVVM.Pages;
 using IoT.ControlPanel.MVVM.ViewModels;
 using IoT.ControlPanel.MVVM.Views;
@@ -16,7 +17,10 @@ namespace IoT.ControlPanel
         {
             var builder = MauiApp.CreateBuilder();
 
-            builder.UseMauiApp<App>().UseMauiCommunityToolkit().ConfigureFonts(
+            builder.UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
+                .UseMauiCameraView()
+                .ConfigureFonts(
                 fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -32,6 +36,8 @@ namespace IoT.ControlPanel
                     fonts.AddFont("fa-thin-100.ttf", "FontAwesome-Thin");
                 });
 
+            builder.Services.AddDbContext<ChristoDbContext>(x => x.UseSqlite($"Data Source={DatabasePathFinder.GetPath()}", x => x.MigrationsAssembly(nameof(SharedLibrary))));
+
             builder.Services.AddSingleton<MainViewModel>();
             builder.Services.AddSingleton<MainPage>();
 
@@ -41,13 +47,14 @@ namespace IoT.ControlPanel
             builder.Services.AddSingleton<AllDevicesViewModel>();
             builder.Services.AddSingleton<AllDevicesPage>();
 
-
             builder.Services.AddSingleton<HomeViewModel>();
             builder.Services.AddSingleton<HomePage>();
 
+            builder.Services.AddSingleton<GetStartedViewModel>();
+            builder.Services.AddSingleton<GetStartedPage>();
+
             builder.Services.AddSingleton<DeviceManager>();
 
-            builder.Services.AddDbContext<ChristoDbContext>(x => x.UseSqlite($"Data Source={DatabasePathFinder.GetPath()}", x => x.MigrationsAssembly(nameof(SharedLibrary))));
 
 #if DEBUG
             builder.Logging.AddDebug();

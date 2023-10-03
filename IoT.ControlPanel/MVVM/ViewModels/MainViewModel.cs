@@ -34,8 +34,7 @@ public partial class MainViewModel : ObservableObject
             IsConfigured = true;
         }
 
-        Devices = new ObservableCollection<AllDevicesViewModel>(_deviceManager.Devices
-            .Select(device => new AllDevicesViewModel(device)).ToList());
+        Devices = new ObservableCollection<AllDevicesViewModel>(_deviceManager.Devices.Select(device => new AllDevicesViewModel(device)).ToList());
 
         _deviceManager.DevicesUpdated += UpdateDeviceList;
     }

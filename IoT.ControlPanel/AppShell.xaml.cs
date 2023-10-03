@@ -1,4 +1,5 @@
 ﻿using IoT.ControlPanel.MVVM.Pages;
+using IoT.ControlPanel.MVVM.Views;
 
 namespace IoT.ControlPanel
 {
@@ -10,8 +11,8 @@ namespace IoT.ControlPanel
 
             Routing.RegisterRoute(nameof(SettingsPage), typeof(SettingsPage));
             Routing.RegisterRoute(nameof(AllDevicesPage), typeof(AllDevicesPage));
-
-            // LÄGG TILL EN ROUTE TILL GetStartedPage
+            Routing.RegisterRoute(nameof(MainPage), typeof(MainPage));
+            Routing.RegisterRoute(nameof(GetStartedPage), typeof(GetStartedPage));
         }
     }
 }

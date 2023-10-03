@@ -52,6 +52,10 @@ public class DeviceManager
     {
         try
         {
+
+            // IF sats (isConfigured) hämta listan om appen har en connection string
+
+
             var updated = false;
             var list = new List<Twin>();
             var result = _registryManager.CreateQuery("select * from devices");
@@ -65,16 +69,16 @@ public class DeviceManager
                     var _device = new DeviceItem { DeviceId = device.DeviceId };
 
                     try { _device.DeviceType = device.Properties.Reported["deviceType"].ToString(); }
-                    catch { }
+                    catch (Exception ex) { Debug.WriteLine(ex); }
 
                     try { _device.Vendor = device.Properties.Reported["vendor"].ToString(); }
-                    catch { }
+                    catch (Exception ex) { Debug.WriteLine(ex); }
 
                     try { _device.Location = device.Properties.Reported["location"].ToString(); }
-                    catch { }
+                    catch (Exception ex) { Debug.WriteLine(ex); }
 
                     try { _device.IsActive = bool.Parse(!string.IsNullOrEmpty(device.Properties.Reported["isActive"].ToString())); }
-                    catch { }
+                    catch (Exception ex) { Debug.WriteLine(ex); }
 
                     Devices.Add(_device);
                     updated = true;
