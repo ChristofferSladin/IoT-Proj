@@ -15,7 +15,7 @@
 
     <Grid Margin="10" VerticalOptions="Start" RowDefinitions="auto, *">
 
-        <Button Grid.Row="0" Command="{Binding GoBackCommand}" Text="X" Style="{StaticResource Key=NavigationButton}" HorizontalOptions="End" VerticalOptions="Center"></Button>
+        <Button Grid.Row="0" Command="{Binding BackToHomeCommand}" Text="X" Style="{StaticResource Key=NavigationButton}" HorizontalOptions="End" VerticalOptions="Center"></Button>
 
         <VerticalStackLayout Grid.Row="1" VerticalOptions="Start">
             <Label Text="Global Settings" FontSize="22"/>

@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using IoT.ControlPanel.MVVM.Models;
+using IoT.ControlPanel.MVVM.Views;
 
 namespace IoT.ControlPanel.MVVM.ViewModels;
 
@@ -17,7 +18,6 @@ public partial class AllDevicesViewModel : ObservableObject
         Icon = SetDeviceIcon();
     }
 
-
     public string DeviceId => _deviceItem.DeviceId ?? "";
     public string DeviceType => _deviceItem.DeviceType ?? "";
     public string Vendor => _deviceItem.Vendor ?? "";
@@ -31,10 +31,6 @@ public partial class AllDevicesViewModel : ObservableObject
     [ObservableProperty]
     string icon;
 
-    [RelayCommand]
-    async Task GoBack() => await Shell.Current.GoToAsync("..");
-
-
     private string SetDeviceIcon()
     {
         return DeviceType.ToLower() switch
@@ -43,4 +39,7 @@ public partial class AllDevicesViewModel : ObservableObject
             _ => "\uf2db",
         };
     }
+
+    [RelayCommand]
+    async static Task BackToHome() => await Shell.Current.GoToAsync(nameof(HomePage));
 }
