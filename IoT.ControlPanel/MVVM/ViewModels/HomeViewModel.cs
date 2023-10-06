@@ -15,31 +15,31 @@ namespace IoT.ControlPanel.MVVM.ViewModels;
 public partial class HomeViewModel : ObservableObject
 {
     private readonly DeviceManager _deviceManager;
+    private readonly IotHubManager _iotHubManager;
+    private readonly System.Threading.Timer _timer;
 
-
-    public HomeViewModel(DeviceManager deviceManager)
+    public HomeViewModel(DeviceManager deviceManager, IotHubManager iotHubManager)
     {
         _deviceManager = deviceManager;
-        //IsConfigured = false;
-        //IsConfigured = true;
+        _iotHubManager = iotHubManager;
 
-        //if (!IsConfigured)
-        //{
-        //    IsConfigured = true;
-        //}
+        _iotHubManager.InitializeAsync().ConfigureAwait(true);
 
         Devices = new ObservableCollection<AllDevicesViewModel>(_deviceManager.Devices.Select(device => new AllDevicesViewModel(device)).ToList());
 
         _deviceManager.DevicesUpdated += UpdateDeviceList;
         Task.FromResult(Initialize());
+
+        _timer = new System.Threading.Timer(_iotHubManager.InitializeSyncron, null, 0, 5000);
+
     }
 
     public async Task Initialize()
     {
         WeatherViewModel = new WeatherViewModel();
         await WeatherViewModel.GetWeatherAsync();
+        //UpdateShowconfigMsg();
     }
-
 
     [ObservableProperty]
     public WeatherViewModel weatherViewModel;
@@ -50,7 +50,72 @@ public partial class HomeViewModel : ObservableObject
     [ObservableProperty]
     ObservableCollection<AllDevicesViewModel> devices;
 
+    [ObservableProperty]
+    string showConfigMsgReason;
+
+    [ObservableProperty]
+    string showConfigMsgSolution;
+
+    public void UpdateShowconfigMsg()
+    {
+
+        if (IotHubManager.IsConfigured)
+        {
+            ShowConfigMsgReason = string.Empty;
+            ShowConfigMsgSolution = string.Empty;
+        }
+        else if (!IotHubManager.IsConfigured)
+        {
+            ShowConfigMsgReason = "Application NOT Configured";
+            ShowConfigMsgSolution = "Please go back and scan your IOT Hub QR-Code";
+        }
+    }
+
+    public ICommand SendDirectMethodCommand => new RelayCommand<AllDevicesViewModel>(SendDirectMethod);
+
+    private async void SendDirectMethod(AllDevicesViewModel selectedDevice)
+    {
+        try
+        {
+            string methodName = selectedDevice.IsActive ? "Stop" : "Start";
+            await _deviceManager.SendDirectMethodAsync(selectedDevice.DeviceId, methodName);
+
+            selectedDevice.IsActive = !selectedDevice.IsActive;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex);
+        }
+    }
+
     public ICommand ToggleStateCommand { get; private set; }
+
+    public async void ToggleState(ToggledEventArgs e)
+    {
+        bool isToggled = e.Value;
+        string deviceId = "Device.Fan";
+        string methodName = isToggled ? "start" : "stop";
+        try
+        {
+            await _deviceManager.SendDirectMethodAsync(deviceId, methodName);
+            IsDeviceConnected = isToggled;  // Only update if successful
+        }
+        catch (Microsoft.Azure.Devices.Common.Exceptions.DeviceNotFoundException)
+        {
+            IsDeviceConnected = false; // Reset to off if not successful
+            ConnectionStatusText = "Device Not Connected";
+            IsConnectionStatusVisible = true;
+
+            await Task.Delay(3000);
+
+            IsConnectionStatusVisible = false;
+        }
+    }
+    private void UpdateDeviceList()
+    {
+        Devices = new ObservableCollection<AllDevicesViewModel>(_deviceManager.Devices.Select(device => new AllDevicesViewModel(device)).ToList());
+    }
+
     private string _connectionStatusText;
     public string ConnectionStatusText
     {
@@ -72,50 +137,6 @@ public partial class HomeViewModel : ObservableObject
         set => SetProperty(ref _isDeviceConnected, value);
     }
 
-    private void UpdateDeviceList()
-    {
-        Devices = new ObservableCollection<AllDevicesViewModel>(_deviceManager.Devices.Select(device => new AllDevicesViewModel(device)).ToList());
-    }
-
-    public ICommand SendDirectMethodCommand => new RelayCommand<AllDevicesViewModel>(SendDirectMethod);
-
-    private async void SendDirectMethod(AllDevicesViewModel selectedDevice)
-    {
-        try
-        {
-            string methodName = selectedDevice.IsActive ? "Stop" : "Start";
-            await AzureIoTHubService.SendDirectMethodAsync(selectedDevice.DeviceId, methodName);
-
-            selectedDevice.IsActive = !selectedDevice.IsActive;
-        }
-        catch (Exception ex)
-        {
-            Debug.WriteLine(ex);
-        }
-    }
-
-    public async void ToggleState(ToggledEventArgs e)
-    {
-        bool isToggled = e.Value;
-        string deviceId = "Device.Fan";
-        string methodName = isToggled ? "start" : "stop";
-        try
-        {
-            await AzureIoTHubService.SendDirectMethodAsync(deviceId, methodName);
-            IsDeviceConnected = isToggled;  // Only update if successful
-        }
-        catch (Microsoft.Azure.Devices.Common.Exceptions.DeviceNotFoundException)
-        {
-            IsDeviceConnected = false; // Reset to off if not successful
-            ConnectionStatusText = "Device Not Connected";
-            IsConnectionStatusVisible = true;
-
-            await Task.Delay(3000);
-
-            IsConnectionStatusVisible = false;
-        }
-    }
-
     [RelayCommand]
     async Task GotoSettings() => await Shell.Current.GoToAsync(nameof(SettingsPage));
 
@@ -123,8 +144,16 @@ public partial class HomeViewModel : ObservableObject
     async Task GoToAllDevices() => await Shell.Current.GoToAsync(nameof(AllDevicesPage));
 
     [RelayCommand]
-    async Task BackToHome() => await Shell.Current.GoToAsync(nameof(HomePage));
+    async Task BackToHome()
+    {
+        UpdateShowconfigMsg();
+        await Shell.Current.GoToAsync(nameof(HomePage));
+    }
 
     [RelayCommand]
-    async Task BackToMain() => await Shell.Current.GoToAsync("//" + nameof(MainPage));
+    async Task BackToMain()
+    {
+        await _iotHubManager.ResetConfiguration();
+        await Shell.Current.GoToAsync("//" + nameof(MainPage));
+    }
 }

@@ -55,6 +55,8 @@ namespace IoT.ControlPanel
 
             builder.Services.AddSingleton<DeviceManager>();
 
+            builder.Services.AddSingleton<IotHubManager>();
+
             builder.Services.AddSingleton<WeatherViewModel>();
 
 

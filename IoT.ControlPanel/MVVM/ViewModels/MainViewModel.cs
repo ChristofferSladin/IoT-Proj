@@ -16,13 +16,14 @@ namespace IoT.ControlPanel.MVVM.ViewModels;
 public partial class MainViewModel : ObservableObject
 {
     private readonly ChristoDbContext _dbContext;
-    private readonly DeviceManager _deviceManager;
+    private readonly IotHubManager _iotHubManager;
+    private Timer _timer;
+    private HomeViewModel _homeViewModel;
 
-    public MainViewModel(ChristoDbContext dbContext, DeviceManager deviceManager)
+    public MainViewModel(ChristoDbContext dbContext, IotHubManager iotHubManager)
     {
         _dbContext = dbContext;
-        _deviceManager = deviceManager;
-        CheckConfigurationAsync().ConfigureAwait(false);
+        _iotHubManager = iotHubManager;
     }
 
     private async Task CheckConfigurationAsync()
@@ -31,8 +32,13 @@ public partial class MainViewModel : ObservableObject
         {
             if (await _dbContext.Settings.AnyAsync())
             {
-                //await _deviceManager.InitializeAsync();
+                await _iotHubManager.InitializeAsync();
+
+                _homeViewModel.UpdateShowconfigMsg();
+
                 await Shell.Current.GoToAsync(nameof(HomePage));
+
+                
             }
         }
         catch (Exception ex)
@@ -42,7 +48,11 @@ public partial class MainViewModel : ObservableObject
     }
 
     [RelayCommand]
-    async Task GoToHomePage() => await Shell.Current.GoToAsync(nameof(HomePage));
+    async Task GoToHomePage() 
+    {
+        await CheckConfigurationAsync();
+        await Shell.Current.GoToAsync(nameof(HomePage));
+    }
 
     [RelayCommand]
     async Task GoToGetStartedPage() => await Shell.Current.GoToAsync(nameof(GetStartedPage));

@@ -8,9 +8,6 @@ using System.Windows.Media.Animation;
 
 namespace Device_Fan
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         private readonly DeviceManager _deviceManager;
