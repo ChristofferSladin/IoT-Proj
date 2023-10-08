@@ -1,4 +1,5 @@
 ﻿
+using IoT.ControlPanel.MVVM.ViewModels;
 using Microsoft.Azure.Devices;
 using Microsoft.EntityFrameworkCore;
 using SharedLibrary.Contexts;
@@ -8,35 +9,29 @@ namespace IoT.ControlPanel.Services;
 
 public class IotHubManager
 {
-    private bool isConfigured;
     private ChristoDbContext _context;
     private RegistryManager _registryManager;
     private ServiceClient _client;
 
-    public static bool IsConfigured = false;
+    public bool IsConfigured;
 
     public IotHubManager(ChristoDbContext context)
     {
         _context = context;
     }
 
-    public void InitializeSyncron(object state) // Modify the method signature to match TimerCallback
-    {
-        Task.Run(() => InitializeAsync());
-    }
-
-    public async Task InitializeAsync()
+    public async Task InitializeAsync()    // TITTA IGENOM DENNA METOD; KAN VARA SÅ ATT ISCONFIURED INTE FUNGERAR SOM DEN SKA, false när den ska va true o tvärtom
     {
         try
         {
-            if (!isConfigured)
+            if (!IsConfigured)
             {
                 var settings = await _context.Settings.FirstOrDefaultAsync();
                 if (settings != null)
                 {
                     _registryManager = RegistryManager.CreateFromConnectionString(settings.ConnectionString);
                     _client = ServiceClient.CreateFromConnectionString(settings.ConnectionString);
-                    isConfigured = true;
+
                     IsConfigured = true;
                 }
             }
@@ -49,14 +44,14 @@ public class IotHubManager
         try
         {
             var settingsList = await _context.Settings.ToListAsync();
-
-            if (settingsList.Any())   // HERE IT JUMPS OUT OF THE TRY AND INTO THE CATCH,     why?
+            if (settingsList.Any())
             {
                 _context.Settings.RemoveRange(settingsList);
-                await _context.SaveChangesAsync(); 
+                await _context.SaveChangesAsync();
+                IsConfigured = false;
+
             }
         }
-        catch (Exception ex)
-        { Debug.WriteLine(ex.Message); }
+        catch (Exception ex) { Debug.WriteLine(ex.Message); }
     }
 }

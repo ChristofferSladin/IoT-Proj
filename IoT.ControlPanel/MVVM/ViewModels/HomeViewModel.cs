@@ -29,16 +29,12 @@ public partial class HomeViewModel : ObservableObject
 
         _deviceManager.DevicesUpdated += UpdateDeviceList;
         Task.FromResult(Initialize());
-
-        _timer = new System.Threading.Timer(_iotHubManager.InitializeSyncron, null, 0, 5000);
-
     }
 
     public async Task Initialize()
     {
         WeatherViewModel = new WeatherViewModel();
         await WeatherViewModel.GetWeatherAsync();
-        //UpdateShowconfigMsg();
     }
 
     [ObservableProperty]
@@ -58,13 +54,12 @@ public partial class HomeViewModel : ObservableObject
 
     public void UpdateShowconfigMsg()
     {
-
-        if (IotHubManager.IsConfigured)
+        if (_iotHubManager.IsConfigured)
         {
             ShowConfigMsgReason = string.Empty;
             ShowConfigMsgSolution = string.Empty;
         }
-        else if (!IotHubManager.IsConfigured)
+        else if (!_iotHubManager.IsConfigured)
         {
             ShowConfigMsgReason = "Application NOT Configured";
             ShowConfigMsgSolution = "Please go back and scan your IOT Hub QR-Code";
@@ -146,7 +141,7 @@ public partial class HomeViewModel : ObservableObject
     [RelayCommand]
     async Task BackToHome()
     {
-        UpdateShowconfigMsg();
+        //UpdateShowconfigMsg();
         await Shell.Current.GoToAsync(nameof(HomePage));
     }
 

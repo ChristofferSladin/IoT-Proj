@@ -14,12 +14,9 @@
 
     <Grid>
         <Image Source="codeimage.jpg" Aspect="Fill"/>
-        
-        <Button Text="Get Started" FontSize="24" Command="{Binding GoToGetStartedPageCommand}" TextColor="{StaticResource GreenOnSwitch}" Style="{StaticResource NavigationButton}" WidthRequest="350" HeightRequest="80" Margin="0,150,0,0" BackgroundColor="Black"></Button>
+
+        <Button Text="Scan QR-Code" FontSize="24" Command="{Binding GoToGetStartedPageCommand}" TextColor="{StaticResource GreenOnSwitch}" Style="{StaticResource NavigationButton}" WidthRequest="350" HeightRequest="80" Margin="0,150,0,0" BackgroundColor="Black"></Button>
 
         <Button Text="Home" FontSize="24" Command="{Binding GoToHomePageCommand}" TextColor="{StaticResource GreenOnSwitch}" Style="{StaticResource NavigationButton}" WidthRequest="350" HeightRequest="80" Margin="0,350,0,0" BackgroundColor="Black"></Button>
     </Grid>
-
-   
-
 </ContentPage>

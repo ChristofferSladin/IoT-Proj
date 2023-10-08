@@ -2,6 +2,7 @@
 using IoT.ControlPanel.MVVM.Models;
 using Microsoft.Azure.Devices;
 using Microsoft.Azure.Devices.Shared;
+using Microsoft.Maui.Controls;
 using System.Diagnostics;
 using System.Timers;
 
@@ -17,8 +18,10 @@ public class DeviceManager
     public List<DeviceItem> Devices { get; private set; }
     public event Action DevicesUpdated;
 
-    public DeviceManager()
+    public DeviceManager(IotHubManager iotHubManager)
     {
+        _iotHubManager = iotHubManager;
+
         _registryManager = RegistryManager.CreateFromConnectionString(_connectionString);
         _serviceClient = ServiceClient.CreateFromConnectionString(_connectionString);
 
@@ -45,7 +48,7 @@ public class DeviceManager
     {
         try
         {
-            if (IotHubManager.IsConfigured)
+            if (_iotHubManager.IsConfigured)
             {
                 var updated = false;
                 var list = new List<Twin>();
@@ -86,6 +89,14 @@ public class DeviceManager
 
                 if (updated)
                     DevicesUpdated.Invoke();
+            }
+            else if (!_iotHubManager.IsConfigured)
+            {
+                if (Devices.Any()) 
+                {
+                    Devices.Clear();
+                    DevicesUpdated.Invoke();  
+                }
             }
         }
         catch (Exception ex)

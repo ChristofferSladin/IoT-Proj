@@ -1,4 +1,5 @@
 using IoT.ControlPanel.MVVM.ViewModels;
+using IoT.ControlPanel.Services;
 using SharedLibrary.Contexts;
 using SharedLibrary.Entities;
 using System.Diagnostics;
@@ -11,12 +12,13 @@ public partial class GetStartedPage : ContentPage
 {
 
     private readonly ChristoDbContext _context;
-	public GetStartedPage(GetStartedViewModel viewModel, ChristoDbContext context)
-	{
-		InitializeComponent();
-		BindingContext = viewModel;
+    private IotHubManager _iotHubManager;
+    public GetStartedPage(GetStartedViewModel viewModel, ChristoDbContext context, IotHubManager iotHubManager)
+    {
+        InitializeComponent();
+        BindingContext = viewModel;
         _context = context;
-
+        _iotHubManager = iotHubManager;
     }
 
     private void cameraView_CamerasLoaded(object sender, EventArgs e)
@@ -32,23 +34,24 @@ public partial class GetStartedPage : ContentPage
             });
         }
     }
-  
+
     public void cameraView_BarcodeDetected(object sender, Camera.MAUI.ZXingHelper.BarcodeEventArgs args)
     {
         MainThread.InvokeOnMainThreadAsync(async () =>
         {
-
             string pattern = @"HostName=.*;SharedAccessKeyName=.*;SharedAccessKey=.*";
-            if(Regex.IsMatch(args.Result[0].Text, pattern))
+            if (Regex.IsMatch(args.Result[0].Text, pattern))
             {
                 try
                 {
                     _context.Settings.Add(new AppSettings { ConnectionString = args.Result[0].Text });
                     await _context.SaveChangesAsync();
 
-                   await Shell.Current.GoToAsync(nameof(HomePage));
+                    _iotHubManager.IsConfigured = true;
+
+                    await Shell.Current.GoToAsync(nameof(HomePage));
                 }
-                catch (Exception ex){ Debug.WriteLine(ex.Message); } 
+                catch (Exception ex) { Debug.WriteLine(ex.Message); }
             }
         });
     }

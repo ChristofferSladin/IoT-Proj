@@ -24,6 +24,8 @@ public partial class MainViewModel : ObservableObject
     {
         _dbContext = dbContext;
         _iotHubManager = iotHubManager;
+
+        CheckConfigurationAsync().ConfigureAwait(true);
     }
 
     private async Task CheckConfigurationAsync()
@@ -33,18 +35,12 @@ public partial class MainViewModel : ObservableObject
             if (await _dbContext.Settings.AnyAsync())
             {
                 await _iotHubManager.InitializeAsync();
-
-                _homeViewModel.UpdateShowconfigMsg();
-
-                await Shell.Current.GoToAsync(nameof(HomePage));
-
+                await Shell.Current.GoToAsync(nameof(HomePage));   
                 
+                _iotHubManager.IsConfigured = true;
             }
         }
-        catch (Exception ex)
-        {
-            Debug.WriteLine(ex);
-        }
+        catch (Exception ex) { Debug.WriteLine(ex); }
     }
 
     [RelayCommand]

@@ -13,7 +13,12 @@
     </ContentPage.Behaviors>
 
     <Grid RowDefinitions="auto,*">
-        
+
+        <VerticalStackLayout Grid.Row="1">
+            <Label Text="{Binding ShowConfigMsgReason}" HorizontalOptions="Center" Margin="0,10,0,0" FontSize="16" TextColor="{StaticResource Red100Accent}" />
+            <Label Text="{Binding ShowConfigMsgSolution}" HorizontalOptions="Center" Margin="0,10,0,0" FontSize="16" TextColor="{StaticResource Red100Accent}"/>
+        </VerticalStackLayout>
+
         <Grid Grid.Row="0" Margin="0,10,10,0">
             <Button Grid.Row="0" Command="{Binding BackToHomeCommand}" Text="X" Style="{StaticResource Key=NavigationButton}" HorizontalOptions="End" VerticalOptions="Center"></Button>
         </Grid>
