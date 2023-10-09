@@ -24,16 +24,13 @@ public class IotHubManager
     {
         try
         {
-            if (!IsConfigured)
+            var settings = await _context.Settings.FirstOrDefaultAsync();
+            if (settings != null)
             {
-                var settings = await _context.Settings.FirstOrDefaultAsync();
-                if (settings != null)
-                {
-                    _registryManager = RegistryManager.CreateFromConnectionString(settings.ConnectionString);
-                    _client = ServiceClient.CreateFromConnectionString(settings.ConnectionString);
+                _registryManager = RegistryManager.CreateFromConnectionString(settings.ConnectionString);
+                _client = ServiceClient.CreateFromConnectionString(settings.ConnectionString);
 
-                    IsConfigured = true;
-                }
+                IsConfigured = true;
             }
         }
         catch (Exception ex) { Debug.WriteLine(ex.Message); }
@@ -48,10 +45,10 @@ public class IotHubManager
             {
                 _context.Settings.RemoveRange(settingsList);
                 await _context.SaveChangesAsync();
-                IsConfigured = false;
 
+                IsConfigured = false;
             }
         }
-        catch (Exception ex) { Debug.WriteLine(ex.Message); }
+        catch (Exception ex) { Debug.WriteLine(ex.Message); Debug.WriteLine(ex.StackTrace); }
     }
 }

@@ -44,14 +44,14 @@ public partial class GetStartedPage : ContentPage
             {
                 try
                 {
-                    _context.Settings.Add(new AppSettings { ConnectionString = args.Result[0].Text });
+                    await _context.Settings.AddAsync(new AppSettings { ConnectionString = args.Result[0].Text });
                     await _context.SaveChangesAsync();
 
                     _iotHubManager.IsConfigured = true;
 
                     await Shell.Current.GoToAsync(nameof(HomePage));
                 }
-                catch (Exception ex) { Debug.WriteLine(ex.Message); }
+                catch (Exception ex) { Debug.WriteLine(ex.Message); Debug.WriteLine(ex.StackTrace); }
             }
         });
     }

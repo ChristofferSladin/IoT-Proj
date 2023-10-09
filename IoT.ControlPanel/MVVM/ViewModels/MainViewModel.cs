@@ -36,19 +36,14 @@ public partial class MainViewModel : ObservableObject
             {
                 await _iotHubManager.InitializeAsync();
                 await Shell.Current.GoToAsync(nameof(HomePage));   
-                
-                _iotHubManager.IsConfigured = true;
             }
         }
         catch (Exception ex) { Debug.WriteLine(ex); }
     }
 
     [RelayCommand]
-    async Task GoToHomePage() 
-    {
-        await CheckConfigurationAsync();
-        await Shell.Current.GoToAsync(nameof(HomePage));
-    }
+    async Task GoToHomePage() => await Shell.Current.GoToAsync(nameof(HomePage));
+    
 
     [RelayCommand]
     async Task GoToGetStartedPage() => await Shell.Current.GoToAsync(nameof(GetStartedPage));

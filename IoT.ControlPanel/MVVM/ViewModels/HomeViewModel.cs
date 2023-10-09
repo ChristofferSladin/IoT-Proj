@@ -141,7 +141,6 @@ public partial class HomeViewModel : ObservableObject
     [RelayCommand]
     async Task BackToHome()
     {
-        //UpdateShowconfigMsg();
         await Shell.Current.GoToAsync(nameof(HomePage));
     }
 
