@@ -33,9 +33,13 @@ public partial class HomeViewModel : ObservableObject
 
     public async Task Initialize()
     {
+        ClockViewModel = new ClockViewModel();
         WeatherViewModel = new WeatherViewModel();
         await WeatherViewModel.GetWeatherAsync();
     }
+
+    [ObservableProperty]
+    public ClockViewModel clockViewModel;
 
     [ObservableProperty]
     public WeatherViewModel weatherViewModel;

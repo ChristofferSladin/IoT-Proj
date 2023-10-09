@@ -26,14 +26,22 @@
             <Label Text="{Binding WeatherViewModel.Temperature}" Grid.Column="1" FontSize="18"></Label>
         </Grid>
 
+       
 
         <Grid Grid.Row="0" Grid.ColumnSpan="2" ColumnDefinitions="*,*" Margin="0">
             <Button Grid.Column="1" Command="{Binding GotoSettingsCommand}" Text="&#xf141;" FontFamily="FontAwesome-Regular" FontSize="18" Style="{StaticResource Key=NavigationButton}" HorizontalOptions="End"></Button>
         </Grid>
 
         <Frame Grid.Row="1" Grid.ColumnSpan="2" Padding="0" Background="{StaticResource Secondary}">
-            <Image Source="Resources/Images/livingroom_unsplash.jpg" Aspect="Fill"></Image>
+            <Grid>
+                <Image Source="Resources/Images/livingroom_unsplash.jpg" Aspect="Fill"></Image>
+                <StackLayout Margin="0,10,70,0">
+                    <Label Text="{Binding ClockViewModel.CurrentTime}" FontSize="20" FontAttributes="Bold" TextColor="{StaticResource Black}" HorizontalOptions="End" VerticalOptions="Start"></Label>
+                    <Label Text="{Binding ClockViewModel.CurrentDate}" FontSize="15" TextColor="{StaticResource Black}" HorizontalOptions="End" VerticalOptions="Start"></Label>
+                </StackLayout>
+            </Grid>
         </Frame>
+
 
         <Grid Grid.Row="2" Grid.ColumnSpan="2" ColumnDefinitions="*,*">
             <Label Grid.Column="0" Text="Quick Access" TextColor="{StaticResource White}"/>
