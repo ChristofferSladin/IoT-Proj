@@ -42,17 +42,21 @@ namespace SharedLibrary.Services
                 Message = $"Executed Method {req.Name} successfully.",
             };
 
+            bool updateTwin = false;
+
             switch (req.Name.ToLower())
             {
                 case "start":
                     {
                         _config.AllowSending = true;
+                        updateTwin = true;
                         break;
                     }
 
                 case "stop":
                     {
                         _config.AllowSending = false;
+                        updateTwin = true;
                         break;
                     }
 
@@ -62,6 +66,12 @@ namespace SharedLibrary.Services
                         return new MethodResponse(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(res)), 404);
                     }
             }
+
+            if (updateTwin)
+            {
+                await DeviceTwinManager.UpdateReportedTwinPropertyAsync(_client, "AllowSending", _config.AllowSending);
+            }
+
             return new MethodResponse(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(res)), 200);
         }
     }

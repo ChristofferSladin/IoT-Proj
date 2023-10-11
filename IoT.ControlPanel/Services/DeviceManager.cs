@@ -1,8 +1,10 @@
-﻿
-using IoT.ControlPanel.MVVM.Models;
+﻿using IoT.ControlPanel.MVVM.Models;
 using Microsoft.Azure.Devices;
+using Microsoft.Azure.Devices.Client;
 using Microsoft.Azure.Devices.Shared;
 using Microsoft.Maui.Controls;
+using SharedLibrary.Models.Devices;
+using SharedLibrary.Services;
 using System.Diagnostics;
 using System.Timers;
 
@@ -38,10 +40,18 @@ public class DeviceManager
 
         var response = await _serviceClient.InvokeDeviceMethodAsync(deviceId, methodInvocation);
 
-        if (response.Status == 200)
-            Console.WriteLine("Direct method invoked successfully");
+        if (methodName.ToLower() == "start")
+        {
+            await _iotHubManager.UpdateDesiredPropertiesAsync(deviceId, "AllowSending", true);
+        }
+        else if (methodName.ToLower() == "stop")
+        {
+            await _iotHubManager.UpdateDesiredPropertiesAsync(deviceId, "AllowSending", false);
+        }
         else
-            Console.WriteLine($"Direct method failed with status: {response.Status}");
+        {
+            Debug.WriteLine($"Method invocation failed with status {response.Status}");
+        }
     }
 
     private async Task GetAllDevicesAsync()
@@ -92,10 +102,10 @@ public class DeviceManager
             }
             else if (!_iotHubManager.IsConfigured)
             {
-                if (Devices.Any()) 
+                if (Devices.Any())
                 {
                     Devices.Clear();
-                    DevicesUpdated.Invoke();  
+                    DevicesUpdated.Invoke();
                 }
             }
         }

@@ -9,11 +9,13 @@ using System.Runtime.CompilerServices;
 using IoT.ControlPanel.Services;
 using System.Windows.Input;
 using IoT.ControlPanel.MVVM.Pages;
+using SharedLibrary.Models.Devices;
 
 namespace IoT.ControlPanel.MVVM.ViewModels;
 
 public partial class HomeViewModel : ObservableObject
 {
+    private readonly string _deviceConnectionString = "HostName=CS-IoT-Heater-Cooler.azure-devices.net;DeviceId=Device.Fan;SharedAccessKey=pDZBfBVrY14g1u/N9DOcbh9f2NA4OBZj00DqMGIh0rw=";
     private readonly DeviceManager _deviceManager;
     private readonly IotHubManager _iotHubManager;
     private readonly System.Threading.Timer _timer;
@@ -22,8 +24,6 @@ public partial class HomeViewModel : ObservableObject
     {
         _deviceManager = deviceManager;
         _iotHubManager = iotHubManager;
-
-        _iotHubManager.InitializeAsync().ConfigureAwait(true);
 
         Devices = new ObservableCollection<AllDevicesViewModel>(_deviceManager.Devices.Select(device => new AllDevicesViewModel(device, iotHubManager)).ToList());
 
@@ -92,16 +92,16 @@ public partial class HomeViewModel : ObservableObject
     public async void ToggleState(ToggledEventArgs e)
     {
         bool isToggled = e.Value;
-        string deviceId = "Device.Fan";
+        var deviceId = "Device.Fan";
         string methodName = isToggled ? "start" : "stop";
         try
         {
             await _deviceManager.SendDirectMethodAsync(deviceId, methodName);
-            IsDeviceConnected = isToggled;  // Only update if successful
+            IsDeviceConnected = isToggled;  
         }
         catch (Microsoft.Azure.Devices.Common.Exceptions.DeviceNotFoundException)
         {
-            IsDeviceConnected = false; // Reset to off if not successful
+            IsDeviceConnected = false; 
             ConnectionStatusText = "Device Not Connected";
             IsConnectionStatusVisible = true;
 

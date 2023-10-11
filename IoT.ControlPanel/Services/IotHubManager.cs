@@ -24,15 +24,62 @@ public class IotHubManager
         _context = context;
     }
 
-    public IotHubManager(string connectionString)
+    public async Task UpdateDesiredPropertiesAsync(string deviceId, string propertyName, object newValue)
     {
-        _connectionString = connectionString;
-        _registryManager = RegistryManager.CreateFromConnectionString(_connectionString);
-        _client = ServiceClient.CreateFromConnectionString(connectionString);
+        const int maxRetries = 3;
+        for (int attempt = 1; attempt <= maxRetries; attempt++)
+        {
+            try
+            {
+                var twin = await _registryManager.GetTwinAsync(deviceId);
+                twin.Properties.Desired[propertyName] = newValue;
+                await _registryManager.UpdateTwinAsync(twin.DeviceId, twin, twin.ETag);
+
+                break;
+            }
+            catch (Microsoft.Azure.Devices.Common.Exceptions.PreconditionFailedException ex)
+            {
+                Debug.WriteLine($"ETag mismatch on attempt {attempt}: {ex.Message}");
+                Debug.WriteLine(ex.StackTrace);
+
+                if (attempt == maxRetries)
+                {
+                    throw;
+                }
+            }
+        }
     }
 
-    public IotHubManager()
+    public async Task InitializeAsync()
     {
+        try
+        {
+            var settings = await _context.Settings.FirstOrDefaultAsync();
+            if (settings != null)
+            {
+                _registryManager = RegistryManager.CreateFromConnectionString(settings.ConnectionString);
+                _client = ServiceClient.CreateFromConnectionString(settings.ConnectionString);
+
+                IsConfigured = true;
+            }
+        }
+        catch (Exception ex) { Debug.WriteLine(ex.Message); }
+    }
+
+    public async Task ResetConfiguration()
+    {
+        try
+        {
+            var settingsList = await _context.Settings.ToListAsync();
+            if (settingsList.Any())
+            {
+                _context.Settings.RemoveRange(settingsList);
+                await _context.SaveChangesAsync();
+
+                IsConfigured = false;
+            }
+        }
+        catch (Exception ex) { Debug.WriteLine(ex.Message); Debug.WriteLine(ex.StackTrace); }
     }
 
     public async Task<bool> DeleteDeviceAsync(string deviceId)
@@ -89,38 +136,5 @@ public class IotHubManager
         catch (Exception ex) { Debug.WriteLine(ex.Message); }
 
         return null!;
-    }
-
-
-    public async Task InitializeAsync()
-    {
-        try
-        {
-            var settings = await _context.Settings.FirstOrDefaultAsync();
-            if (settings != null)
-            {
-                _registryManager = RegistryManager.CreateFromConnectionString(settings.ConnectionString);
-                _client = ServiceClient.CreateFromConnectionString(settings.ConnectionString);
-
-                IsConfigured = true;
-            }
-        }
-        catch (Exception ex) { Debug.WriteLine(ex.Message); }
-    }
-
-    public async Task ResetConfiguration()
-    {
-        try
-        {
-            var settingsList = await _context.Settings.ToListAsync();
-            if (settingsList.Any())
-            {
-                _context.Settings.RemoveRange(settingsList);
-                await _context.SaveChangesAsync();
-
-                IsConfigured = false;
-            }
-        }
-        catch (Exception ex) { Debug.WriteLine(ex.Message); Debug.WriteLine(ex.StackTrace); }
     }
 }

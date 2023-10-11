@@ -21,8 +21,6 @@
             <Label Text="{Binding WeatherViewModel.Temperature}" Grid.Column="1" FontSize="18"></Label>
         </Grid>
 
-       
-
         <Grid Grid.Row="0" Grid.ColumnSpan="2" ColumnDefinitions="*,*" Margin="0">
             <Button Grid.Column="1" Command="{Binding GotoSettingsCommand}" Text="&#xf141;" FontFamily="FontAwesome-Regular" FontSize="18" Style="{StaticResource Key=NavigationButton}" HorizontalOptions="End"></Button>
         </Grid>
@@ -30,19 +28,17 @@
         <Frame Grid.Row="1" Grid.ColumnSpan="2" Padding="0" Background="{StaticResource Secondary}">
             <Grid>
                 <Image Source="Resources/Images/livingroom_unsplash.jpg" Aspect="Fill"></Image>
-                <StackLayout Margin="0,10,70,0">
+                <StackLayout Margin="0,0,70,0">
                     <Label Text="{Binding ClockViewModel.CurrentTime}" FontSize="20" FontAttributes="Bold" TextColor="{StaticResource Black}" HorizontalOptions="End" VerticalOptions="Start"></Label>
                     <Label Text="{Binding ClockViewModel.CurrentDate}" FontSize="15" TextColor="{StaticResource Black}" HorizontalOptions="End" VerticalOptions="Start"></Label>
                 </StackLayout>
             </Grid>
         </Frame>
 
-
         <Grid Grid.Row="2" Grid.ColumnSpan="2" ColumnDefinitions="*,*">
             <Label Grid.Column="0" Text="Quick Access" TextColor="{StaticResource White}"/>
 
             <HorizontalStackLayout Grid.Column="1" HorizontalOptions="End">
-
                 <HorizontalStackLayout.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding GoToAllDevicesCommand}" NumberOfTapsRequired="1"/>
                 </HorizontalStackLayout.GestureRecognizers>
@@ -71,7 +67,6 @@
             <Grid RowDefinitions="auto,*,*" ColumnDefinitions="*,*">
                 <Label Text="&#xf0eb;" FontFamily="FontAwesome-Regular" Grid.Row="0" Grid.Column="0" VerticalOptions="Start" FontSize="32"/>
 
-                <Switch x:Name="DeviceSwitch2" Grid.Row="0" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Start" Margin="0,-14,0,0" IsToggled="{Binding IsDeviceConnected}" Toggled="OnSwitchToggled"/>
 
                 <Label Grid.Row="1" Grid.ColumnSpan="2" Margin="0,10,0,0" Text="{Binding ConnectionStatusText}" IsVisible="{Binding IsConnectionStatusVisible}" TextColor="{StaticResource Red300Accent}" HorizontalOptions="Center"/>
 
@@ -87,7 +82,6 @@
             <Label Text="{Binding ShowConfigMsgSolution}" HorizontalOptions="Center" Margin="0,10,0,0" FontSize="16" TextColor="{StaticResource Red100Accent}"/>
         </VerticalStackLayout>
         
-
         <Button Grid.Row="6" Grid.ColumnSpan="2" Grid.Column="0" Margin="0,50,0,0" Text="Back" Command="{Binding BackToMainCommand}" TextColor="{StaticResource Tertiary}" Style="{StaticResource NavigationButton}" HorizontalOptions="Center" WidthRequest="300"/>
         <Button Grid.Row="5" Grid.ColumnSpan="2" Grid.Column="0" Margin="0,50,0,0" Text="Register Device" Command="{Binding GoToregisterDeviceCommand}" TextColor="{StaticResource Tertiary}" Style="{StaticResource NavigationButton}" HorizontalOptions="Center" WidthRequest="300"/> 
     </Grid>

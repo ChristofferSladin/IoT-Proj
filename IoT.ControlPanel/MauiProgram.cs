@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SharedLibrary;
 using SharedLibrary.Contexts;
+using SharedLibrary.Models.Devices;
 
 namespace IoT.ControlPanel
 {
