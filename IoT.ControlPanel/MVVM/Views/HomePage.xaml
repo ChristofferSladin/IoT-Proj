@@ -13,7 +13,7 @@
         <toolkit:StatusBarBehavior StatusBarColor="{StaticResource Black}"></toolkit:StatusBarBehavior>
     </ContentPage.Behaviors>
 
-    <Grid ColumnDefinitions="*,*" Margin="10" ColumnSpacing="15" RowSpacing="20" VerticalOptions="Start" RowDefinitions="1*, 3*, auto, 2*, auto, 2*">
+    <Grid ColumnDefinitions="*,*" Margin="10" ColumnSpacing="15" RowSpacing="20" VerticalOptions="Start" RowDefinitions="1*, 3*, auto, 3*, auto, *, auto">
 
         <Grid Grid.Row="0" ColumnDefinitions="auto, auto, auto" Grid.ColumnSpan="1" HorizontalOptions="Center" VerticalOptions="Center" ColumnSpacing="10">
             <Label Text="{Binding WeatherViewModel.Icon}" FontFamily="FontAwesome-Regular" Grid.Column="0" FontSize="26"></Label>
@@ -88,7 +88,7 @@
         </VerticalStackLayout>
         
 
-        <Button Grid.Row="5" Grid.ColumnSpan="2" Grid.Column="0" Margin="0,50,0,0" Text="Back" Command="{Binding BackToMainCommand}" TextColor="{StaticResource Tertiary}" Style="{StaticResource NavigationButton}" HorizontalOptions="Center" WidthRequest="300"/>
-
+        <Button Grid.Row="6" Grid.ColumnSpan="2" Grid.Column="0" Margin="0,50,0,0" Text="Back" Command="{Binding BackToMainCommand}" TextColor="{StaticResource Tertiary}" Style="{StaticResource NavigationButton}" HorizontalOptions="Center" WidthRequest="300"/>
+        <Button Grid.Row="5" Grid.ColumnSpan="2" Grid.Column="0" Margin="0,50,0,0" Text="Register Device" Command="{Binding GoToregisterDeviceCommand}" TextColor="{StaticResource Tertiary}" Style="{StaticResource NavigationButton}" HorizontalOptions="Center" WidthRequest="300"/> 
     </Grid>
 </ContentPage>

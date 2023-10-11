@@ -2,12 +2,22 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="IoT.ControlPanel.MVVM.Views.RegisterDevicePage"
+             xmlns:viewModels="clr-namespace:IoT.ControlPanel.MVVM.ViewModels"
+             x:DataType="viewModels:RegisterDeviceViewModel"
+             Shell.NavBarIsVisible="False"
              Title="RegisterDevicePage">
-    <StackLayout Padding="20">
-        <Entry x:Name="ConnectionStringEntry" 
-               Placeholder="Enter Connection String" 
-               Text="{Binding ConnectionString}" />
-        <Button Text="Register Device" 
-                Command="{Binding RegisterDeviceCommand}" />
+    
+    
+    <StackLayout Margin="50">
+        <Entry x:Name="DeviceIdEntry" 
+               Placeholder="Enter Device Id"
+               Text="{Binding DeviceId}"
+               TextColor="White"/>
+        <Label Text="{Binding Message}" TextColor="{Binding MessageColor}" Margin="10" HorizontalOptions="Center"/>
+        <Button Text="Register Device" Command="{Binding RegisterDeviceCommand}" Style="{StaticResource NavigationButton}" WidthRequest="300" TextColor="{StaticResource Tertiary}"/>
+        <Button Text="Home" Command="{Binding GoBackToHomeCommand}" Style="{StaticResource NavigationButton}" WidthRequest="300" TextColor="{StaticResource Tertiary}" Margin="0,100,0,0"/>
+
     </StackLayout>
+
+    
 </ContentPage>

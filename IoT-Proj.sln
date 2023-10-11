@@ -13,8 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IoT.ControlPanel", "IoT.Con
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Device_Fan", "Device_Fan\Device_Fan.csproj", "{DC6C2C7A-5382-4747-90D5-463549774100}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureFunctions", "AzureFunctions\AzureFunctions.csproj", "{18658E37-39E5-4ED8-A7CA-E31029976964}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,10 +41,6 @@ Global
 		{DC6C2C7A-5382-4747-90D5-463549774100}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC6C2C7A-5382-4747-90D5-463549774100}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC6C2C7A-5382-4747-90D5-463549774100}.Release|Any CPU.Build.0 = Release|Any CPU
-		{18658E37-39E5-4ED8-A7CA-E31029976964}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{18658E37-39E5-4ED8-A7CA-E31029976964}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{18658E37-39E5-4ED8-A7CA-E31029976964}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{18658E37-39E5-4ED8-A7CA-E31029976964}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

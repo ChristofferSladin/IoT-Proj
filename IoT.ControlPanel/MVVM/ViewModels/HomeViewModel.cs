@@ -25,7 +25,7 @@ public partial class HomeViewModel : ObservableObject
 
         _iotHubManager.InitializeAsync().ConfigureAwait(true);
 
-        Devices = new ObservableCollection<AllDevicesViewModel>(_deviceManager.Devices.Select(device => new AllDevicesViewModel(device)).ToList());
+        Devices = new ObservableCollection<AllDevicesViewModel>(_deviceManager.Devices.Select(device => new AllDevicesViewModel(device, iotHubManager)).ToList());
 
         _deviceManager.DevicesUpdated += UpdateDeviceList;
         Task.FromResult(Initialize());
@@ -112,7 +112,7 @@ public partial class HomeViewModel : ObservableObject
     }
     private void UpdateDeviceList()
     {
-        Devices = new ObservableCollection<AllDevicesViewModel>(_deviceManager.Devices.Select(device => new AllDevicesViewModel(device)).ToList());
+        Devices = new ObservableCollection<AllDevicesViewModel>(_deviceManager.Devices.Select(device => new AllDevicesViewModel(device, _iotHubManager)).ToList());
     }
 
     private string _connectionStatusText;
@@ -153,5 +153,11 @@ public partial class HomeViewModel : ObservableObject
     {
         await _iotHubManager.ResetConfiguration();
         await Shell.Current.GoToAsync("//" + nameof(MainPage));
+    }
+
+    [RelayCommand]
+    async Task GoToregisterDevice()
+    {
+        await Shell.Current.GoToAsync(nameof(RegisterDevicePage));
     }
 }

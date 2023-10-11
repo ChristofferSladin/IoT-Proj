@@ -53,6 +53,9 @@ namespace IoT.ControlPanel
             builder.Services.AddSingleton<GetStartedViewModel>();
             builder.Services.AddSingleton<GetStartedPage>();
 
+            builder.Services.AddSingleton<RegisterDeviceViewModel>();
+            builder.Services.AddSingleton<RegisterDevicePage>();
+
             builder.Services.AddSingleton<DeviceManager>();
 
             builder.Services.AddSingleton<IotHubManager>();

@@ -14,7 +14,7 @@ namespace IoT.ControlPanel
             Routing.RegisterRoute(nameof(MainPage), typeof(MainPage));
             Routing.RegisterRoute(nameof(GetStartedPage), typeof(GetStartedPage));
             Routing.RegisterRoute(nameof(HomePage), typeof(HomePage));
-
+            Routing.RegisterRoute(nameof(RegisterDevicePage), typeof(RegisterDevicePage));
         }
     }
 }
