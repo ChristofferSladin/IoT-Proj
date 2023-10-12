@@ -5,7 +5,6 @@ namespace IoT.ControlPanel
 {
     public partial class MainPage : ContentPage
     {
-        private IotHubManager _iotHubManager;
         public MainPage(MainViewModel viewModel)
         {
             InitializeComponent();
