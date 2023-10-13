@@ -6,18 +6,19 @@
              x:DataType="viewModels:RegisterDeviceViewModel"
              Shell.NavBarIsVisible="False"
              Title="RegisterDevicePage">
-    
-    
-    <StackLayout Margin="50">
-        <Entry x:Name="DeviceIdEntry" 
-               Placeholder="Enter Device Id"
-               Text="{Binding DeviceId}"
-               TextColor="White"/>
-        <Label Text="{Binding Message}" TextColor="{Binding MessageColor}" Margin="10" HorizontalOptions="Center"/>
-        <Button Text="Register Device" Command="{Binding RegisterDeviceCommand}" Style="{StaticResource NavigationButton}" WidthRequest="300" TextColor="{StaticResource Tertiary}"/>
-        <Button Text="Home" Command="{Binding GoBackToHomeCommand}" Style="{StaticResource NavigationButton}" WidthRequest="300" TextColor="{StaticResource Tertiary}" Margin="0,100,0,0"/>
 
-    </StackLayout>
+    <Grid RowDefinitions="*,*">
+        <StackLayout Margin="50" Grid.Row="0">
+            <Entry x:Name="DeviceIdEntry" 
+           Placeholder="Enter Device Id"
+           Text="{Binding DeviceId}"
+           TextColor="White"/>
+            <Label Text="{Binding Message}" TextColor="{Binding MessageColor}" Margin="10" HorizontalOptions="Center"/>
+            <Button Text="Register Device" Command="{Binding RegisterDeviceCommand}" Style="{StaticResource NavigationButton}" WidthRequest="300" TextColor="{StaticResource Tertiary}"/>
 
-    
+        </StackLayout>
+
+        <Button Grid.Row="1" Text="Home" Command="{Binding GoBackToHomeCommand}" Style="{StaticResource NavigationButton}" WidthRequest="300" TextColor="{StaticResource Tertiary}" Margin="0,100,0,0"/>
+
+    </Grid>
 </ContentPage>
