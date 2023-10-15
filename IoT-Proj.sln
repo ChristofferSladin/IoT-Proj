@@ -13,6 +13,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IoT.ControlPanel", "IoT.Con
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Device_Fan", "Device_Fan\Device_Fan.csproj", "{DC6C2C7A-5382-4747-90D5-463549774100}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Device_Lamp", "Device_Lamp\Device_Lamp.csproj", "{7A3A330E-5BC7-4BA9-9EC6-0F3DDC74F60C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Device_SmartLock", "Device_SmartLock\Device_SmartLock.csproj", "{872F8300-3A69-4D7F-A644-E92D8C045733}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +45,14 @@ Global
 		{DC6C2C7A-5382-4747-90D5-463549774100}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC6C2C7A-5382-4747-90D5-463549774100}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC6C2C7A-5382-4747-90D5-463549774100}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A3A330E-5BC7-4BA9-9EC6-0F3DDC74F60C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A3A330E-5BC7-4BA9-9EC6-0F3DDC74F60C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A3A330E-5BC7-4BA9-9EC6-0F3DDC74F60C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A3A330E-5BC7-4BA9-9EC6-0F3DDC74F60C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{872F8300-3A69-4D7F-A644-E92D8C045733}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{872F8300-3A69-4D7F-A644-E92D8C045733}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{872F8300-3A69-4D7F-A644-E92D8C045733}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{872F8300-3A69-4D7F-A644-E92D8C045733}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

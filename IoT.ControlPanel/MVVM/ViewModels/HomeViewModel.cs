@@ -87,9 +87,9 @@ public partial class HomeViewModel : ObservableObject
         }
     }
 
-    public ICommand ToggleStateCommand { get; private set; }
+    public ICommand ToggleFanStateCommand { get; private set; }
 
-    public async void ToggleState(ToggledEventArgs e)
+    public async void ToggleFanState(ToggledEventArgs e)
     {
         bool isToggled = e.Value;
         var deviceId = "Device.Fan";
@@ -97,17 +97,63 @@ public partial class HomeViewModel : ObservableObject
         try
         {
             await _deviceManager.SendDirectMethodAsync(deviceId, methodName);
-            IsDeviceConnected = isToggled;  
+            IsFanConnected = isToggled;  
         }
         catch (Microsoft.Azure.Devices.Common.Exceptions.DeviceNotFoundException)
         {
-            IsDeviceConnected = false; 
-            ConnectionStatusText = "Device Not Connected";
-            IsConnectionStatusVisible = true;
+            IsFanConnected = false; 
+            FanConnectionStatusText = "Device Not Connected";
+            IsFanConnectionStatusVisible = true;
 
             await Task.Delay(3000);
 
-            IsConnectionStatusVisible = false;
+            IsFanConnectionStatusVisible = false;
+        }
+    }
+    public ICommand ToggleLampStateCommand { get; private set; }
+
+    public async void ToggleLampState(ToggledEventArgs e)
+    {
+        bool isToggled = e.Value;
+        var deviceId = "Device_Lamp";
+        string methodName = isToggled ? "start" : "stop";
+        try
+        {
+            await _deviceManager.SendDirectMethodAsync(deviceId, methodName);
+            IsLampConnected = isToggled;
+        }
+        catch (Microsoft.Azure.Devices.Common.Exceptions.DeviceNotFoundException)
+        {
+            IsLampConnected = false;
+            LampConnectionStatusText = "Device Not Connected";
+            IsLampConnectionStatusVisible = true;
+
+            await Task.Delay(3000);
+
+            IsLampConnectionStatusVisible = false;
+        }
+    }
+
+    public ICommand ToggleLockStateCommand { get; private set; }
+    public async void ToggleLockState(ToggledEventArgs e)
+    {
+        bool isToggled = e.Value;
+        var deviceId = "Device_SmartLock";
+        string methodName = isToggled ? "start" : "stop";
+        try
+        {
+            await _deviceManager.SendDirectMethodAsync(deviceId, methodName);
+            IsLockConnected = isToggled;
+        }
+        catch (Microsoft.Azure.Devices.Common.Exceptions.DeviceNotFoundException)
+        {
+            IsLockConnected = false;
+            LockConnectionStatusText = "Device Not Connected";
+            IsLockConnectionStatusVisible = true;
+
+            await Task.Delay(3000);
+
+            IsLockConnectionStatusVisible = false;
         }
     }
     private void UpdateDeviceList()
@@ -115,26 +161,73 @@ public partial class HomeViewModel : ObservableObject
         Devices = new ObservableCollection<AllDevicesViewModel>(_deviceManager.Devices.Select(device => new AllDevicesViewModel(device, _iotHubManager)).ToList());
     }
 
-    private string _connectionStatusText;
-    public string ConnectionStatusText
+    private string _fanConnectionStatusText;
+    public string FanConnectionStatusText
     {
-        get => _connectionStatusText;
-        set => SetProperty(ref _connectionStatusText, value);
+        get => _fanConnectionStatusText;
+        set => SetProperty(ref _fanConnectionStatusText, value);
     }
 
-    private bool _isConnectionStatusVisible;
-    public bool IsConnectionStatusVisible
+    private bool _isFanConnectionStatusVisible;
+    public bool IsFanConnectionStatusVisible
     {
-        get => _isConnectionStatusVisible;
-        set => SetProperty(ref _isConnectionStatusVisible, value);
+        get => _isFanConnectionStatusVisible;
+        set => SetProperty(ref _isFanConnectionStatusVisible, value);
     }
 
-    private bool _isDeviceConnected;
-    public bool IsDeviceConnected
+    private bool _isFanConnected;
+    public bool IsFanConnected
     {
-        get => _isDeviceConnected;
-        set => SetProperty(ref _isDeviceConnected, value);
+        get => _isFanConnected;
+        set => SetProperty(ref _isFanConnected, value);
     }
+
+    // _____________________________________
+
+    private string _lampConnectionStatusText;
+    public string LampConnectionStatusText
+    {
+        get => _lampConnectionStatusText;
+        set => SetProperty(ref _lampConnectionStatusText, value);
+    }
+
+    private bool _isLampConnectionStatusVisible;
+    public bool IsLampConnectionStatusVisible
+    {
+        get => _isLampConnectionStatusVisible;
+        set => SetProperty(ref _isLampConnectionStatusVisible, value);
+    }
+
+    private bool _isLampConnected;
+    public bool IsLampConnected
+    {
+        get => _isLampConnected;
+        set => SetProperty(ref _isLampConnected, value);
+    }
+
+    // _________________________________________________
+
+    private string _lockConnectionStatusText;
+    public string LockConnectionStatusText
+    {
+        get => _lockConnectionStatusText;
+        set => SetProperty(ref _lockConnectionStatusText, value);
+    }
+
+    private bool _isLockConnectionStatusVisible;
+    public bool IsLockConnectionStatusVisible
+    {
+        get => _isLockConnectionStatusVisible;
+        set => SetProperty(ref _isLockConnectionStatusVisible, value);
+    }
+
+    private bool _isLockConnected;
+    public bool IsLockConnected
+    {
+        get => _isLockConnected;
+        set => SetProperty(ref _isLockConnected, value);
+    }
+
 
     [RelayCommand]
     async Task GotoSettings() => await Shell.Current.GoToAsync(nameof(SettingsPage));

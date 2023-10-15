@@ -11,13 +11,19 @@ public partial class HomePage : ContentPage
 		BindingContext = viewModel;
         _homeViewModel = viewModel;
 	}
-
-    private void OnSwitchToggled(object sender, ToggledEventArgs e)
+    private void LampSwitch_Toggled(object sender, ToggledEventArgs e)
     {
-        var viewModel = (HomeViewModel)BindingContext;
-        viewModel.ToggleState(e);
-    }
+        _homeViewModel.ToggleLampState(e);
 
+    }
+    private void FanSwitch_Toggled(object sender, ToggledEventArgs e)
+    {
+        _homeViewModel.ToggleFanState(e);
+    }
+    private void LockSwitch_Toggled(object sender, ToggledEventArgs e)
+    {
+        _homeViewModel.ToggleLockState(e);
+    }
     protected override void OnAppearing()
     {
         base.OnAppearing();
